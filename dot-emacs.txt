@@ -1,0 +1,25 @@
+;;; こんな感じです
+
+(require 'xcscope)
+;;; インデックスファイルの更新を抑制します
+(setq cscope-do-not-update-database t)
+;;; cscopeの対象と使用するインデックスファイルのディレクトリを指定
+;;;   最初がソースディレクトリで "$SRC" に対応します。先頭の "^" を忘れずに。
+;;;   次はインデックスファイルを配置したディレクトリで "$DB" に対応します。
+(setq cscope-database-regexps
+    '(
+        ("^/home/cuomo/Code"
+            ("/home/cuomo/Code/db/binaries" ("-q" "-k"))
+        )
+    )
+)
+
+;;; アセンブラコードでも有効になるように
+(add-hook 'asm-mode-hook (function cscope:hook))
+;;; 色を変更します（これは好みで）
+;;; 色づけが嫌なら (setq cscope-use-face nil)
+(set-face-foreground 'cscope-file-face "MediumSeaGreen")
+(set-face-foreground 'cscope-function-face "yellow")
+(set-face-foreground 'cscope-line-number-face "red")
+(set-face-foreground 'cscope-line-face "yellow")
+(set-face-foreground 'cscope-mouse-face "blue")
